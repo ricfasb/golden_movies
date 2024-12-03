@@ -1,0 +1,16 @@
+.app-layout {
+    background-color: #fff; 
+    display: flex;
+    height: calc(100% - 64px);
+    width: 100%;
+}
+
+.app-sidebar {
+    width: 10%; 
+}
+
+.app-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}

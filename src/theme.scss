@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-primary: mat.define-palette(mat.$indigo-palette, 500);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+ ),
+ typography: mat.define-typography-config(
+    $font-family: Roboto,
+ )
+));
+
+@include mat.all-component-themes($my-theme);
+
+.mat-mdc-header-cell {
+  background-color: #3f51b5 !important;
+  color: #FFF;
+}
+
+.mat-mdc-button, .mat-mdc-unelevated-button, .mat-mdc-raised-button, .mat-mdc-outlined-button {
+  border-radius: 10px !important;
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+}

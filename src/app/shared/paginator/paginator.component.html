@@ -1,0 +1,45 @@
+<div class="paginator">
+    <button 
+      class="paginator-button" 
+      (click)="goToFirst()" 
+      [disabled]="currentPage === 1"
+    >
+        &laquo;
+    </button>
+
+    <button 
+      class="paginator-button" 
+      (click)="goToPrevious()" 
+      [disabled]="currentPage === 1"
+    >
+        &lt;
+    </button>
+
+    <div class="page-numbers">
+        @for (page of getTotalPages(); track page; let i = $index) {
+            <button 
+                class="page-number" 
+                (click)="goToPage(page)" 
+                [class.active]="currentPage === page"
+            >
+                {{ page }}
+            </button>
+        }
+    </div>
+
+    <button 
+      class="paginator-button" 
+      (click)="goToNext()" 
+      [disabled]="currentPage === totalPages"
+    >
+        &gt;
+    </button>
+
+    <button 
+      class="paginator-button" 
+      (click)="goToLast()" 
+      [disabled]="currentPage === totalPages"
+    >
+        &raquo;
+    </button>
+  </div>

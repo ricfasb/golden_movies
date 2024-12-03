@@ -1,0 +1,18 @@
+th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+
+.mat-column-id {
+    width: 10%;
+}
+
+.mat-column-year,
+.mat-column-title,
+.mat-column-winner {
+    width: 30%;
+}
