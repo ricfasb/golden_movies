@@ -22,11 +22,6 @@ $my-theme: mat.define-light-theme((
   color: #FFF;
 }
 
-.mat-mdc-button, .mat-mdc-unelevated-button, .mat-mdc-raised-button, .mat-mdc-outlined-button {
+.mat-mdc-button, .mat-mdc-raised-button {
   border-radius: 10px !important;
-}
-
-mat-paginator {
-  display: flex;
-  justify-content: center;
 }

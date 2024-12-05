@@ -3,9 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WinnersByYearComponent } from './winners-by-year.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MovieResponse } from '../../../interfaces/movie-response';
 import { of, throwError } from 'rxjs';
 import { MoviesService } from '../../../services/movies.service';
+import { Movie } from '../../../interfaces/movie';
 
 describe('WinnersByYearComponent', () => {
   let component: WinnersByYearComponent;
@@ -21,8 +21,8 @@ describe('WinnersByYearComponent', () => {
       ],
       providers: [MoviesService],
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(WinnersByYearComponent);
     component = fixture.componentInstance;
     moviesService = TestBed.inject(MoviesService);
@@ -36,27 +36,17 @@ describe('WinnersByYearComponent', () => {
   it('should call findWinnersByYear and assign winners when searchYear is set', () => {
     component.searchYear = 2020;
 
-    const mockResponse: MovieResponse = {
-      content: [
-        { id: 1, title: 'Movie A', year: 2020, winner: true, studios: [], producers: [] },
-        { id: 2, title: 'Movie B', year: 2020, winner: true, studios: [], producers: [] },
-      ],
-      pageable: null,
-      totalElements: 2,
-      last: true,
-      totalPages: 1,
-      first: true,
-      number: 0,
-      numberOfElements: 2,
-      size: 2,
-    };
+    const mockResponse: Movie[] = [
+      { id: 1, title: 'The Formula', year: 2020, winner: true, studios: [], producers: [] },
+      { id: 2, title: 'Cruising', year: 2020, winner: true, studios: [], producers: [] },
+    ];
 
     spyOn(moviesService, 'findWinnersByYear').and.returnValue(of(mockResponse));
 
     component.findWinnersByYear();
 
     expect(moviesService.findWinnersByYear).toHaveBeenCalledWith(2020);
-    expect(component.winners).toEqual(mockResponse.content);
+    expect(component.winners).toEqual(mockResponse);
   });
 
   it('should handle error and set winners to empty array when service fails', () => {

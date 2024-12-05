@@ -47,15 +47,35 @@ describe('MoviesComponent', () => {
     component.winnerFilter.nativeElement.value = undefined;
   
     const mockResponse: MovieResponse = {
-      content: [],
-      pageable: null,
-      totalElements: 0,
-      last: true,
-      totalPages: 1,
-      first: true,
+      content: [
+        { id: 1, title: 'The Formula', year: 2020, winner: true, studios: [], producers: [] },
+        { id: 2, title: 'Cruising', year: 2020, winner: true, studios: [], producers: [] },
+      ],
+      pageable: {
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        pageNumber: 0,
+        pageSize: 3,
+        offset: 0,
+        paged: true,
+        unpaged: false,
+      },
+      last: false,
+      totalPages: 4,
+      totalElements: 12,
+      size: 3,
       number: 0,
-      numberOfElements: 0,
-      size: 10,
+      sort: {
+        sorted: true,
+        unsorted: false,
+        empty: false,
+      },
+      first: true,
+      numberOfElements: 3,
+      empty: false,
     };
     
     spyOn(moviesService, 'getMovies').and.returnValue(of(mockResponse));
@@ -63,7 +83,7 @@ describe('MoviesComponent', () => {
     component.loadMovies(page, pageSize, sort);
   
     expect(moviesService.getMovies).toHaveBeenCalledWith(
-      page + 1,
+      page,
       pageSize,
       sort,
       'undefined',
@@ -87,7 +107,7 @@ describe('MoviesComponent', () => {
     component.loadMovies(page, pageSize, sort);
   
     expect(moviesService.getMovies).toHaveBeenCalledWith(
-      page + 1,
+      page,
       pageSize,
       sort,
       '2022',

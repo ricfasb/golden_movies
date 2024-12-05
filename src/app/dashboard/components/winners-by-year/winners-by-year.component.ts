@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { catchError, map, of } from 'rxjs';
 import { MoviesService } from '../../../services/movies.service';
 import { Movie } from '../../../interfaces/movie';
-import { MovieResponse } from '../../../interfaces/movie-response';
 
 @Component({
   selector: 'app-winners-by-year',
@@ -34,8 +33,8 @@ export class WinnersByYearComponent {
   findWinnersByYear() {
     if (this.searchYear) {
       this.moviesService.findWinnersByYear(this.searchYear).pipe(
-        map((data: MovieResponse) => {
-          this.winners = data.content;
+        map((data) => {
+          this.winners = data;
         }),
         catchError(() => {
           this.winners = [];

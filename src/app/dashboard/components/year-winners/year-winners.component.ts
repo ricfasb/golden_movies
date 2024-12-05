@@ -16,7 +16,7 @@ import { YearWinner } from '../../../interfaces/year-winner';
 })
 export class YearWinnersComponent {
   
-  winners: YearWinner[] = [];
+  years: YearWinner[] = [];
 
   constructor(private moviesService: MoviesService) { }
   
@@ -25,8 +25,8 @@ export class YearWinnersComponent {
   }
 
   getYearWinners() {
-    this.moviesService.getYearWinners().subscribe(data => {
-      this.winners = data;
+    this.moviesService.getYearWinners().subscribe(response => {
+      this.years = response.years;
     });
   }
 

@@ -34,10 +34,10 @@ describe('ProducerIntervalComponent', () => {
   it('should fetch producer intervals', () => {
     const mockData: ProducerInterval = {
       min: [
-        { producer: 'Producer A', interval: 1, previousYear: 2000, followingYear: 2001 },
+        { producer: 'Matthew Vaughn', interval: 1, previousWin: 2000, followingWin: 2001 },
       ],
       max: [
-        { producer: 'Producer B', interval: 10, previousYear: 1990, followingYear: 2000 },
+        { producer: 'Joel Silver', interval: 10, previousWin: 1990, followingWin: 2000 },
       ],
     };
 

@@ -1,18 +1,20 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Movie } from '../interfaces/movie';
-import { MoviesService } from '../services/movies.service';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { map, catchError, of } from 'rxjs';
+import { MoviesService } from '../services/movies.service';
 import { MovieResponse } from '../interfaces/movie-response';
+import { Movie } from '../interfaces/movie';
 import { PaginatorComponent } from '../shared/paginator/paginator.component';
 
 @Component({
   selector: 'app-movies',
   standalone: true,
   imports: [
+    MatCardModule,
     MatTableModule, 
     MatIconModule,
     MatFormFieldModule,
@@ -47,7 +49,7 @@ export class MoviesComponent implements OnInit {
     const yearValue = this.yearFilter?.nativeElement.value.toLowerCase();
     const winnerValue = this.winnerFilter?.nativeElement.value.toLowerCase();
 
-    this.moviesService.getMovies(page + 1, pageSize, sort, yearValue, winnerValue).pipe(
+    this.moviesService.getMovies(page, pageSize, sort, yearValue, winnerValue).pipe(
       map((response: MovieResponse) => {
         this.dataSource.data = response.content;
         this.totalElements = response.totalElements;

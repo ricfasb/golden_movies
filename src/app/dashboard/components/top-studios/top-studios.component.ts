@@ -25,8 +25,8 @@ export class TopStudiosComponent implements OnInit {
   }
 
   getTopStudios() {
-    this.moviesService.getTopStudios().subscribe(data => {
-      this.topStudios = data;
+    this.moviesService.getTopStudios().subscribe(response => {
+      this.topStudios = response.studios.slice(0, 3);
     });
   }
 

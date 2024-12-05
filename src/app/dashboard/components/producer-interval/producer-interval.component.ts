@@ -21,7 +21,7 @@ export class ProducerIntervalComponent implements OnInit {
     max: []
   }
 
-  displayedColumns: string[] = ['producer', 'interval', 'previousYear', 'followingYear'];
+  displayedColumns: string[] = ['producer', 'interval', 'previousWin', 'followingWin'];
 
   constructor(private moviesService: MoviesService) { }
   

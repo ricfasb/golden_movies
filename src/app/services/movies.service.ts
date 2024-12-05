@@ -3,23 +3,24 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MovieResponse } from '../interfaces/movie-response';
 
-import { TopStudio } from '../interfaces/top-studio';
+import { TopStudioResponse } from '../interfaces/top-studio';
 import { ProducerInterval } from '../interfaces/producer-interval';
-import { YearWinner } from '../interfaces/year-winner';
+import { YearWinnerResponse } from '../interfaces/year-winner';
+import { Movie } from '../interfaces/movie';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
 
-  private apiUrl = 'http://localhost:9090/movies';
+  private apiUrl = 'https://challenge.outsera.tech/api/movies/';
 
   constructor(private http: HttpClient) { }
 
   getMovies(page: number, pageSize: number, sort: string, year?: string, winner?: string): Observable<MovieResponse> {
     let params = new HttpParams()
       .set('page', page)
-      .set('pageSize', pageSize)
+      .set('size', pageSize)
       .set('sort', sort);
       
     if (year) {
@@ -33,19 +34,19 @@ export class MoviesService {
     return this.http.get<MovieResponse>(this.apiUrl, { params });
   }
 
-  findWinnersByYear(year: number): Observable<MovieResponse> {
-    let params = new HttpParams().set('year', year.toString());
-    return this.http.get<MovieResponse>(this.apiUrl, { params });
+  findWinnersByYear(year: number): Observable<Movie[]> {
+    let params = new HttpParams().set('winner', true).set('year', year.toString());
+    return this.http.get<Movie[]>(this.apiUrl, { params });
   }
 
-  getTopStudios(): Observable<TopStudio[]> {
+  getTopStudios(): Observable<TopStudioResponse> {
     let params = new HttpParams().set('projection', 'studios-with-win-count');
-    return this.http.get<TopStudio[]>(this.apiUrl, { params });
+    return this.http.get<TopStudioResponse>(this.apiUrl, { params });
   }
   
-  getYearWinners(): Observable<YearWinner[]> {
+  getYearWinners(): Observable<YearWinnerResponse> {
     let params = new HttpParams().set('projection', 'years-with-multiple-winners');
-    return this.http.get<YearWinner[]>(this.apiUrl, { params });
+    return this.http.get<YearWinnerResponse>(this.apiUrl, { params });
   }
 
   getProducerIntervals(): Observable<ProducerInterval> {

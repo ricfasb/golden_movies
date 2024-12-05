@@ -6,6 +6,6 @@ export interface ProducerInterval {
 export interface IntervalDetails {
   producer: string;
   interval: number;
-  previousYear: number;
-  followingYear: number;
+  previousWin: number;
+  followingWin: number;
 }

@@ -3,12 +3,13 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { MoviesService } from './movies.service';
 import { MovieResponse } from '../interfaces/movie-response';
+import { Movie } from '../interfaces/movie';
 
 describe('MoviesService', () => {
   let service: MoviesService;
   let httpMock: HttpTestingController;
 
-  const apiUrl = 'http://localhost:9090/movies';
+  const apiUrl = 'https://challenge.outsera.tech/api/movies/';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,73 +32,68 @@ describe('MoviesService', () => {
   describe('#getMovies', () => {
     it('should retrieve movies with correct parameters', () => {
       const mockResponse: MovieResponse = {
-        content: [],
-        totalElements: 0,
-        totalPages: 0,
-        size: 10,
-        number: 1,
-        pageable: undefined,
+        content: [
+          { id: 1, title: 'The Formula', year: 2015, winner: true, studios: [], producers: [] },
+          { id: 2, title: 'Cruising', year: 2015, winner: true, studios: [], producers: [] },
+        ],
+        pageable: {
+          sort: {
+            sorted: true,
+            unsorted: false,
+            empty: false,
+          },
+          pageNumber: 0,
+          pageSize: 2,
+          offset: 0,
+          paged: true,
+          unpaged: false,
+        },
         last: false,
-        first: false,
-        numberOfElements: 0
+        totalPages: 1,
+        totalElements: 2,
+        size: 2,
+        number: 0,
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        first: true,
+        numberOfElements: 2,
+        empty: false,
       };
 
-      service.getMovies(1, 10, 'title', '2020', 'yes').subscribe(response => {
+      service.getMovies(0, 2, 'id', '2015', 'yes').subscribe(response => {
         expect(response).toEqual(mockResponse);
       });
 
       const req = httpMock.expectOne(request => request.url === apiUrl);
 
       expect(req.request.method).toBe('GET');
-      expect(req.request.params.get('page')).toBe('1');
-      expect(req.request.params.get('pageSize')).toBe('10');
-      expect(req.request.params.get('sort')).toBe('title');
-      expect(req.request.params.get('year')).toBe('2020');
+      expect(req.request.params.get('page')).toBe('0');
+      expect(req.request.params.get('sort')).toBe('id');
+      expect(req.request.params.get('year')).toBe('2015');
       expect(req.request.params.get('winner')).toBe('yes');
 
       req.flush(mockResponse);
     });
 
     it('should retrieve winners for a specific year', () => {
-      const mockResponse: MovieResponse = {
-        content: [
-          {
-            id: 1,
-            year: 2020,
-            title: 'Movie A',
-            studios: ['Studio A'],
-            producers: ['Producer A'],
-            winner: true,
-          },
-          {
-            id: 2,
-            year: 2020,
-            title: 'Movie B',
-            studios: ['Studio B'],
-            producers: ['Producer B'],
-            winner: true,
-          },
-        ],
-        pageable: null,
-        totalElements: 2,
-        last: true,
-        totalPages: 1,
-        first: true,
-        number: 0,
-        numberOfElements: 2,
-        size: 2,
-      };
+      const mockResponse: Movie[] = [
+        { id: 181, title: 'Fantastic Four', year: 2015, winner: true, studios: [], producers: [] },
+        { id: 182, title: 'Fifty Shades of Gre', year: 2015, winner: true, studios: [], producers: [] },
+      ];
 
-      service.findWinnersByYear(2020).subscribe((response) => {
+      service.findWinnersByYear(2015).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
       const req = httpMock.expectOne((request) =>
-        request.url === apiUrl && request.params.get('year') === '2020'
+        request.url === apiUrl && request.params.get('year') === '2015'
       );
 
       expect(req.request.method).toBe('GET');
-      expect(req.request.params.get('year')).toBe('2020');
+      expect(req.request.params.get('year')).toBe('2015');
 
       req.flush(mockResponse);
     });

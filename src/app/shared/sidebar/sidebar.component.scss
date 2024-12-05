@@ -1,19 +1,20 @@
 .menu {
-    height: auto;
-    overflow: hidden;
-    list-style: none;
-    padding: 5px 20px;
+  height: auto;
+  overflow: hidden;
+  list-style: none;
+  padding: 5px 20px;
 }
-ul.menu li.active a span {
-      color: red;
-  }
+
+.menu a.active {
+  color: #007bff !important;
+}
 
 .menu a {
-    text-decoration: none;
-    font-size: 16px;
-    color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
 }
 
 .menu a:hover {
-    color: #007bff;
+  color: #007bff;
 }
